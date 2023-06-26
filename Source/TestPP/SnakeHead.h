@@ -56,4 +56,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void DownAction();
 
+	UPROPERTY(Category = "HeadValue", EditAnywhere, DisplayName = "BCO")
+		TSubclassOf<AActor> BPBody;
+
+	int BodyCounter = 0;
+	
+	TArray<AActor*> NewBody;
+	AActor* PreBody = nullptr;
+	AActor* NextBody;
+	
+
 };

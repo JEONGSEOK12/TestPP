@@ -69,16 +69,26 @@ void ASnakeHead::DownMove(float _Value)
 	AddActorLocalOffset(FVector::DownVector);
 }
 
+
+
+
+
+
+
 void ASnakeHead::LeftAction()
 {
+
+	FTransform Trans;
+	Trans.SetLocation(GetActorLocation());
+	
+
 	FVector MovePos = FVector::LeftVector * 100.0f;
 
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation() + MovePos, "Wall"))
 	{
 		return;
 	}
-
-	AddActorLocalOffset(FVector::LeftVector * 100.0f);
+	AddActorLocalOffset(MovePos);
 
 	// 여기에 Body가 있는지 확인해야 한다.
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))
@@ -86,17 +96,57 @@ void ASnakeHead::LeftAction()
 		AActor* Body = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
+
+	
+		PreBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+		NewBody.Add(PreBody);
+		++BodyCounter;
+
 	}
 
+	for (int i = 0; i < BodyCounter; i++)
+	{
+		
+		NextBody = NewBody[i];
+		NewBody[i] = PreBody;
+		PreBody = NextBody;
+
+
+	}
+
+
+	
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void ASnakeHead::RightAction()
 {
 	FVector MovePos = FVector::RightVector * 100.0f;
+
 
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation() + MovePos, "Wall"))
 	{
 		return;
 	}
+
 
 	AddActorLocalOffset(FVector::RightVector * 100.0f);
 
@@ -107,8 +157,17 @@ void ASnakeHead::RightAction()
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
 	}
-
 }
+
+
+
+
+
+
+
+
+
+
 void ASnakeHead::UpAction()
 {
 	FVector MovePos = FVector::UpVector * 100.0f;
@@ -149,3 +208,17 @@ void ASnakeHead::DownAction()
 		GetSnakeGameMode()->CurBodyReset();
 	}
 }
+
+
+
+
+
+
+//NewBody[0] = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
+//
+//for (int i = 1; i < BodyCounter; i++)
+//{
+//	NextBody = NewBody[i];
+//	NewBody[i] = NewBody[0];
+//	NewBody[0] = NextBody;
+//}

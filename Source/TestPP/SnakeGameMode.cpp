@@ -113,6 +113,51 @@ void ASnakeGameMode::SetPart(int _Y, int _Z, AActor* _Part)
 	AllMapActor[_Z][_Y] = _Part;
 }
 
+void ASnakeGameMode::RemovePart(AActor* _Part)
+{
+	// 배열에서의 x y가 될수는 없다.
+	//          200                       100
+
+	FVector Pos = _Part->GetActorLocation();
+
+	int Y = Pos.Y / TileSize.Y;
+	int Z = Pos.Z / TileSize.Z;
+
+	SetPart(Y, Z, _Part);
+
+	// SetPart(, _Part);
+}
+
+void ASnakeGameMode::RemovePart(int _Y, int _Z, AActor* _Part)
+{
+	if (0 > _Y)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (0 >= Y) [Y : %d][Z : %d]"), __FUNCTION__, __LINE__, _Y, _Z);
+		return;
+	}
+
+	if (0 > _Z)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (0 >= Y) [Y : %d][Z : %d]"), __FUNCTION__, __LINE__, _Y, _Z);
+		return;
+	}
+
+	if (_Y >= TileCount.Y)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (Y >= TileCount.Y) [Y : %d][Z : %d]"), __FUNCTION__, __LINE__, _Y, _Z);
+		return;
+	}
+
+	if (_Z >= TileCount.Z)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%S(%u)> if (Z >= TileCount.Z) [Y : %d][Z : %d]"), __FUNCTION__, __LINE__, _Y, _Z);
+		return;
+	}
+
+	AllMapActor[_Z][_Y] = nullptr;
+}
+
+
 void ASnakeGameMode::Tick(float _Delta)
 {
 	Super::Tick(_Delta);

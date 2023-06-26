@@ -36,6 +36,10 @@ public:
 
 	void SetPart(int _Y, int _Z, class AActor* _Part);
 
+	void RemovePart(class AActor* _Part);
+
+	void RemovePart(int _Y, int _Z, class AActor* _Part);
+
 	bool IsPart(FVector _Pos, FName _Tag);
 
 	bool IsPart(int _Y, int _Z, FName _Tag);
