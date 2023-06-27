@@ -90,13 +90,7 @@ void ASnakeHead::LeftAction()
 		return;
 	}
 
-
-
-
 	AddActorLocalOffset(MovePos);
-
-
-
 	// 여기에 Body가 있는지 확인해야 한다.
 	
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))
@@ -115,19 +109,14 @@ void ASnakeHead::LeftAction()
 		++BodyCounter;
 	}
 
-
-	if (BodyCounter == 1)
+	for (int i = 0; i < BodyCounter; i++)
 	{
 		AActor* MyBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
-		NewBody[0]->Destroy();
-		NewBody[0] = MyBody;
+		NewBody[i]->Destroy();
+		NewBody[i] = MyBody;
 		MyBody->Destroy();
-		NewBody[0] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
-
+		NewBody[i] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
 	}
-
-
-
 
 }
 
@@ -146,25 +135,49 @@ void ASnakeHead::LeftAction()
 
 void ASnakeHead::RightAction()
 {
+	FTransform Trans;
+	Trans.SetLocation(GetActorLocation());
+
 	FVector MovePos = FVector::RightVector * 100.0f;
 
+	FTransform Trans2;
+	Trans2.SetLocation(GetActorLocation() + MovePos);
 
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation() + MovePos, "Wall"))
 	{
 		return;
 	}
 
-
-	AddActorLocalOffset(FVector::RightVector * 100.0f);
-
+	AddActorLocalOffset(MovePos);
 	// 여기에 Body가 있는지 확인해야 한다.
+
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))
 	{
 		AActor* Body = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
+
+
+		AActor* MyBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+		NewBody.Add(MyBody);
+
+		MyBody->Destroy();
+		NewBody[0] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+
+		++BodyCounter;
 	}
+
+	for (int i = 0; i < BodyCounter; i++)
+	{
+		AActor* MyBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+		NewBody[i]->Destroy();
+		NewBody[i] = MyBody;
+		MyBody->Destroy();
+		NewBody[i] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+	}
+
 }
+
 
 
 
@@ -177,44 +190,98 @@ void ASnakeHead::RightAction()
 
 void ASnakeHead::UpAction()
 {
+	FTransform Trans;
+	Trans.SetLocation(GetActorLocation());
+
 	FVector MovePos = FVector::UpVector * 100.0f;
 
+	FTransform Trans2;
+	Trans2.SetLocation(GetActorLocation() + MovePos);
+
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation() + MovePos, "Wall"))
 	{
 		return;
 	}
 
-
-	AddActorLocalOffset(FVector::UpVector * 100.0f);
-
+	AddActorLocalOffset(MovePos);
 	// 여기에 Body가 있는지 확인해야 한다.
+
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))
 	{
 		AActor* Body = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
+
+
+		AActor* MyBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+		NewBody.Add(MyBody);
+
+		MyBody->Destroy();
+		NewBody[0] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+
+		++BodyCounter;
 	}
+
+	for (int i = 0; i < BodyCounter; i++)
+	{
+		AActor* MyBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+		NewBody[i]->Destroy();
+		NewBody[i] = MyBody;
+		MyBody->Destroy();
+		NewBody[i] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+	}
+
 }
+
+
+
+
 void ASnakeHead::DownAction()
 {
+	FTransform Trans;
+	Trans.SetLocation(GetActorLocation());
+
 	FVector MovePos = FVector::DownVector * 100.0f;
+
+	FTransform Trans2;
+	Trans2.SetLocation(GetActorLocation() + MovePos);
 
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation() + MovePos, "Wall"))
 	{
 		return;
 	}
 
-	// 이동을 하고 나서
-	AddActorLocalOffset(FVector::DownVector * 100.0f);
-
+	AddActorLocalOffset(MovePos);
 	// 여기에 Body가 있는지 확인해야 한다.
+
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))
 	{
 		AActor* Body = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
+
+
+		AActor* MyBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+		NewBody.Add(MyBody);
+
+		MyBody->Destroy();
+		NewBody[0] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+
+		++BodyCounter;
 	}
+
+	for (int i = 0; i < BodyCounter; i++)
+	{
+		AActor* MyBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+		NewBody[i]->Destroy();
+		NewBody[i] = MyBody;
+		MyBody->Destroy();
+		NewBody[i] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+	}
+
 }
+
+
 
 
 
