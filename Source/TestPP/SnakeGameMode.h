@@ -48,6 +48,10 @@ public:
 
 	AActor* GetPart(int _Y, int _Z, FName _Tag);
 
+	AActor* GetHead(FVector _Pos, FName _Tag);
+
+	AActor* GetHead(int _Y, int _Z, FName _Tag);
+
 	void CurBodyReset();
 
 protected:

@@ -77,47 +77,54 @@ void ASnakeHead::DownMove(float _Value)
 
 void ASnakeHead::LeftAction()
 {
-
 	FTransform Trans;
 	Trans.SetLocation(GetActorLocation());
 	
-
 	FVector MovePos = FVector::LeftVector * 100.0f;
+
+	FTransform Trans2;
+	Trans2.SetLocation(GetActorLocation()+MovePos);
 
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation() + MovePos, "Wall"))
 	{
 		return;
 	}
+
+
+
+
 	AddActorLocalOffset(MovePos);
 
+
+
 	// 여기에 Body가 있는지 확인해야 한다.
+	
 	if (true == GetSnakeGameMode()->IsPart(GetActorLocation(), "Body"))
 	{
 		AActor* Body = GetSnakeGameMode()->GetPart(GetActorLocation(), "Body");
 		Body->Destroy();
 		GetSnakeGameMode()->CurBodyReset();
 
-	
-		PreBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
-		NewBody.Add(PreBody);
-		++BodyCounter;
 
-	}
-
-	for (int i = 0; i < BodyCounter; i++)
-	{
+		AActor* MyBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+		NewBody.Add(MyBody);
 		
-		NextBody = NewBody[i];
-		NewBody[i] = PreBody;
-		PreBody = NextBody;
+		MyBody->Destroy();
+		NewBody[0] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
 
-
+		++BodyCounter;
 	}
 
 
-	
+	if (BodyCounter == 1)
+	{
+		AActor* MyBody = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
+		NewBody[0]->Destroy();
+		NewBody[0] = MyBody;
+		MyBody->Destroy();
+		NewBody[0] = GetWorld()->SpawnActor<AActor>(BPBody, Trans);
 
-
+	}
 
 
 

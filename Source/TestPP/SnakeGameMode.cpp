@@ -336,6 +336,57 @@ AActor* ASnakeGameMode::GetPart(int _Y, int _Z, FName _Tag)
 	return AllMapActor[_Z][_Y];
 }
 
+
+
+AActor* ASnakeGameMode::GetHead(FVector _Pos, FName _Tag)
+{
+	int Y = _Pos.Y / TileSize.Y;
+	int Z = _Pos.Z / TileSize.Z;
+
+	return GetHead(Y, Z, _Tag);
+}
+
+AActor* ASnakeGameMode::GetHead(int _Y, int _Z, FName _Tag)
+{
+	if (0 > _Y)
+	{
+		UE_LOG(LogTemp, Log, TEXT("%S(%u)> if (0 >= Y) [Y : %d][Z : %d]"), __FUNCTION__, __LINE__, _Y, _Z);
+		return nullptr;
+	}
+
+	if (0 > _Z)
+	{
+		UE_LOG(LogTemp, Log, TEXT("%S(%u)> if (0 >= Y) [Y : %d][Z : %d]"), __FUNCTION__, __LINE__, _Y, _Z);
+		return nullptr;
+	}
+
+	if (_Y >= TileCount.Y)
+	{
+		UE_LOG(LogTemp, Log, TEXT("%S(%u)> if (Y >= TileCount.Y) [Y : %d][Z : %d]"), __FUNCTION__, __LINE__, _Y, _Z);
+		return nullptr;
+	}
+
+	if (_Z >= TileCount.Z)
+	{
+		UE_LOG(LogTemp, Log, TEXT("%S(%u)> if (Z >= TileCount.Z) [Y : %d][Z : %d]"), __FUNCTION__, __LINE__, _Y, _Z);
+		return nullptr;
+	}
+
+	if (nullptr == AllMapActor[_Z][_Y])
+	{
+		return nullptr;
+	}
+
+	if (false == AllMapActor[_Z][_Y]->ActorHasTag(_Tag))
+	{
+		return nullptr;
+	}
+
+	return AllMapActor[_Z][_Y];
+}
+
+
+
 void ASnakeGameMode::CurBodyReset()
 {
 	CurBody = nullptr;

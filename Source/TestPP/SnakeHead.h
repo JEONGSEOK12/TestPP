@@ -58,10 +58,14 @@ public:
 
 	UPROPERTY(Category = "HeadValue", EditAnywhere, DisplayName = "BCO")
 		TSubclassOf<AActor> BPBody;
-
+	int MoveCounter = 0;
 	int BodyCounter = 0;
 	
+	AActor* XBody;
 	TArray<AActor*> NewBody;
+	
+	
+
 	AActor* PreBody = nullptr;
 	AActor* NextBody;
 	
